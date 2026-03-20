@@ -1,0 +1,7 @@
+/dev/block/by-name/miscdata       0660     system      system
+/dev/block/by-name/persist       0660     system      system
+/dev/block/by-name/system       0660     system      system
+/dev/block/by-name/gpsgl       0660    system      root
+/dev/block/by-name/gpsbd       0660     system      root
+/dev/block/by-name/gnssmodem       0660     system      root
+/dev/block/by-name/sysdumpdb        0660     system     root
