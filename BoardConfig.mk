@@ -56,6 +56,10 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
 
+# Kernel modules
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := \
+    $(wildcard device/tecno/TECNOBF6/recovery/root/lib/modules/*.ko)
+
 # Kernel - recovery
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
