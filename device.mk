@@ -27,7 +27,6 @@ PRODUCT_PACKAGES += \
     bootctrl.sp9863a
 
 PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    bootctrl.sp9863a \
     libgptutils \
     libz \
     libcutils
