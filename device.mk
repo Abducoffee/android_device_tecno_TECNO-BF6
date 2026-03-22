@@ -26,11 +26,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     bootctrl.sp9863a
 
-PRODUCT_STATIC_BOOT_CONTROL_HAL := \
-    libgptutils \
-    libz \
-    libcutils
-
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
