@@ -20,6 +20,7 @@ BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwr
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     dtbo \
+    vendor_boot \
     vbmeta_vendor \
     vendor_dlkm \
     product \
@@ -65,14 +66,17 @@ BOARD_VENDOR_RAMDISK_KERNEL_MODULES := \
     $(wildcard device/tecno/TECNOBF6/recovery/root/lib/modules/*.ko)
 
 # Kernel - recovery
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_USES_GENERIC_KERNEL_IMAGE := true
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
 TARGET_NO_KERNEL := true
 BOARD_USES_VENDOR_BOOT := true
 BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
 BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
 TARGET_NO_RECOVERY := true
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144
