@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/tecno/TECNO-BF6
+DEVICE_PATH := device/tecno/TECNOBF6
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
@@ -114,5 +114,5 @@ TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
-W_INCLUDE_FASTBOOTD := true
+TW_INCLUDE_FASTBOOTD := true
 TW_DEVICE_VERSION := dream_7x

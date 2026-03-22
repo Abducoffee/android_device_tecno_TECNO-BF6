@@ -20,10 +20,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
-PRODUCT_DEVICE := TECNO-BF6
-PRODUCT_NAME := twrp_TECNO-BF6
+PRODUCT_DEVICE := TECNOBF6
+PRODUCT_NAME := twrp_TECNOBF6
 PRODUCT_BRAND := TECNO
-PRODUCT_MODEL := TECNO BF6
+PRODUCT_MODEL := TECNO POP 7
 PRODUCT_MANUFACTURER := tecno
 
 PRODUCT_GMS_CLIENTID_BASE := android-transsion
