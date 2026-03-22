@@ -16,20 +16,27 @@ BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 BUILD_BROKEN_NINJA_USES_ENV_VARS += RTIC_MPGEN
 BUILD_BROKEN_PLUGIN_VALIDATION := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
 
+
 # A/B
 AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
-    dtbo \
-    vendor_boot \
     vbmeta_vendor \
-    vendor_dlkm \
     product \
-    boot \
     vendor \
-    vbmeta \
     system \
-    system_ext \
-    vbmeta_system
+    vbmeta_system \
+    odm
+
+# Vendor boot
+BOARD_BOOT_HEADER_VERSION := 4
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
+
+BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
+BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
+
+# Kernel modules
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := \
+    $(wildcard device/tecno/TECNOBF6/recovery/root/lib/modules/*.ko)
 
 # Architecture
 TARGET_ARCH := arm
@@ -38,6 +45,9 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := generic
 TARGET_CPU_VARIANT_RUNTIME := cortex-a55
+
+ENABLE_CPUSETS := true
+ENABLE_SCHEDBOOST := true
 
 TARGET_USES_64_BIT_BINDER := true
 
@@ -49,8 +59,11 @@ TARGET_NO_BOOTLOADER := true
 TARGET_SCREEN_DENSITY := 320
 
 # Kernel
-BOARD_KERNEL_SEPARATED_DTBO := true
-BOARD_RAMDISK_USE_LZ4 := true
+TARGET_KERNEL_ARCH := arm
+TARGET_KERNEL_HEADER_ARCH := arm
+BOARD_USES_GENERIC_KERNEL_IMAGE := true
+BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
+TARGET_NO_KERNEL := true
 BOARD_BOOTIMG_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := console=ttyS1,115200n8 buildvariant=user
@@ -60,22 +73,8 @@ BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
-# Kernel modules
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES := \
-    $(wildcard device/tecno/TECNOBF6/recovery/root/lib/modules/*.ko)
-
-# Kernel - recovery
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_USES_GENERIC_KERNEL_IMAGE := true
-BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
-TARGET_NO_KERNEL := true
-BOARD_USES_VENDOR_BOOT := true
-BOARD_INCLUDE_RECOVERY_RAMDISK_IN_VENDOR_BOOT := true
-BOARD_MOVE_RECOVERY_RESOURCES_TO_VENDOR_BOOT := true
-TARGET_NO_RECOVERY := true
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
 
 # Partitions
@@ -89,25 +88,24 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 BOARD_SUPER_PARTITION_SIZE := 9126805504
 BOARD_SUPER_PARTITION_GROUPS := tecno_dynamic_partitions
-BOARD_TECNO_DYNAMIC_PARTITIONS_PARTITION_LIST := system system system_ext vendor product vendor_dlkm
+BOARD_TECNO_DYNAMIC_PARTITIONS_PARTITION_LIST := system system vendor vendor product product odm odm my_product my_product my_engineering my_engineering my_company my_company my_carrier my_carrier my_region my_region my_heytap my_heytap my_stock my_stock my_preload my_preload my_bigball my_bigball my_manifest my_manifest
 BOARD_TECNO_DYNAMIC_PARTITIONS_SIZE := 9122611200
 
 # Platform
 TARGET_BOARD_PLATFORM := sp9863a
 
-# Crypto
-#TW_INCLUDE_CRYPTO := true
-#TW_INCLUDE_CRYPTO_FBE := true
-#TW_INCLUDE_FBE_METADATA_DECRYPT := true
-BOARD_USES_METADATA_PARTITION := true
-
 # Recovery
-TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+TARGET_NO_RECOVERY := true
+TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+
+BOARD_KERNEL_SEPARATED_DTBO := true
+BOARD_RAMDISK_USE_LZ4 := true
 
 # Security patch level
 VENDOR_SECURITY_PATCH := 2021-08-01
@@ -121,13 +119,17 @@ PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 
+# Crypto
+TW_INCLUDE_CRYPTO := false
+TW_INCLUDE_CRYPTO_FBE := false
+TW_INCLUDE_FBE_METADATA_DECRYPT := false
+BOARD_USES_METADATA_PARTITION := true
+
 # TWRP Configuration
-TW_LOAD_VENDOR_MODULES := true
 TW_THEME := portrait_hdpi
 TW_EXTRA_LANGUAGES := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_USE_TOOLBOX := true
 TW_INCLUDE_REPACKTOOLS := true
-TW_INCLUDE_FASTBOOTD := true
-TW_DEVICE_VERSION := dream_7x
+TW_DEVICE_VERSION := @dream_7x
