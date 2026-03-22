@@ -6,7 +6,7 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/twrp_TECNOBF6.mk
+    device/tecno/TECNOBF6/twrp_TECNOBF6.mk
 
 COMMON_LUNCH_CHOICES := \
     twrp_TECNOBF6-eng
